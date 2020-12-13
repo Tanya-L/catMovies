@@ -1,20 +1,25 @@
-import {MovieRating} from "../pages/movies/movieRating";
+import {MovieRating} from "../interfaces/movieRating";
 import utilStyles from "../styles/utils.module.css";
-import {MovieInfo} from "../pages/movies/movieInfo";
+import {MovieInfo} from "../interfaces/movieInfo";
 import React from "react";
 
 export default function MovieRatingComponent({movieInfo}: { movieInfo: MovieInfo }) {
     function formatMovieRating(r: MovieRating) {
-        return <div className={utilStyles.listItem}>
+        return <span className={utilStyles.list}>
             <p>{r.Source}: {r.Value}</p>
-        </div>
+        </span>
     }
 
     if (movieInfo) {
         return (
             <div>
-                <p className={utilStyles.lightText}> Ratings:
+                <p className={utilStyles.highlight}> Ratings:
                     {movieInfo.Ratings.map(formatMovieRating)}</p>
+                <hr/>
+                <span className={utilStyles.colorInherit}>
+                   Metascore: {movieInfo.Metascore} | imdb Rating: {movieInfo.imdbRating} |
+                    imdb Votes: {movieInfo.imdbVotes} | imdb Id : {movieInfo.imdbID}
+                </span>
             </div>
         )
     }

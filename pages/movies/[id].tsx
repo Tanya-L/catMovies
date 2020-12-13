@@ -1,12 +1,15 @@
 import Layout from "../../components/Layout";
 import Head from 'next/head'
-import utilStyles from '../../styles/utils.module.css'
-import Date from "../../components/Date";
-import {useState} from "react";
-import {MovieInfo} from "./movieInfo";
+import React, {useState} from "react";
+import {MovieInfo} from "../../interfaces/movieInfo";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {getAllPostIds, getPostData} from "../../lib/posts";
-import MovieInfoComponent from "../../components/movieInfo";
+import MovieInfoComponent from "../../components/movieInfoComponent";
+import MovieRatingComponent from "../../components/movieRatingComponent";
+import {TwitterBoxComponent} from "../../components/twitterBoxComponent";
+import MovieTechInfoComponent from "../../components/movieTechInfoComponent";
+import {TrailerInfo} from "../../interfaces/trailerInfo";
+import TrailerComponent from "../../components/trailerInfoComponent";
 
 export default function Post({postData}: {
     postData: {
@@ -17,18 +20,34 @@ export default function Post({postData}: {
     }
 }) {
 
-    const [movieInfo, setMovieInfo] = useState<MovieInfo>()
+    const [movieInfo, setMovieInfo] = useState<MovieInfo>(undefined)
+    const [trailerInfo, setTrailerInfo] = useState<TrailerInfo>(undefined)
 
-    fetch("http://www.omdbapi.com/?apikey=403ca16f&t=" + postData.id)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(response.statusText)
-            }
-            return response.json()
-        })
-        .then((response: MovieInfo) => {
-            setMovieInfo(response)
-        });
+    if (!movieInfo) {
+        fetch("http://www.omdbapi.com/?apikey=403ca16f&t=" + postData.title)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(response.statusText)
+                }
+                return response.json()
+            })
+            .then((response: MovieInfo) => {
+                setMovieInfo(response)
+            });
+    }
+
+    if (!trailerInfo && movieInfo) {
+        fetch("https://imdb-api.com/en/API/YouTubeTrailer/k_zxnuzv55/" + movieInfo.imdbID)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(response.statusText)
+                }
+                return response.json()
+            })
+            .then((response: TrailerInfo) => {
+                setTrailerInfo(response)
+            });
+    }
 
     return (
         <Layout>
@@ -36,16 +55,16 @@ export default function Post({postData}: {
                 <title>{postData.title}</title>
             </Head>
             <article>
-                <MovieInfoComponent movieInfo={movieInfo} />
+                <MovieInfoComponent movieInfo={movieInfo}/>
+                <MovieRatingComponent movieInfo={movieInfo}/>
+                <MovieTechInfoComponent movieInfo={movieInfo}/>
+                <TrailerComponent trailerInfo={trailerInfo}/>
 
-                <h1 className={utilStyles.headingXl}>{postData.title}</h1>
-                <div className={utilStyles.lightText}>
-                    <Date dateString={postData.date}/>
-                </div>
-                <div dangerouslySetInnerHTML={{__html: postData.contentHtml}}/>
+                <TwitterBoxComponent/>
+
             </article>
         </Layout>
-    )
+    );
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
