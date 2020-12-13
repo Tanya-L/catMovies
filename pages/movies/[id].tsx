@@ -1,4 +1,4 @@
-import MainLayout from "../../components/MainLayout";
+import MyPageLayout from "../../components/MyPageLayout";
 import Head from 'next/head'
 import React, {useState} from "react";
 import {MovieInfo} from "../../interfaces/movieInfo";
@@ -6,11 +6,12 @@ import {GetStaticPaths, GetStaticProps} from "next";
 import {getAllPostIds, getPostData} from "../../lib/posts";
 import MovieInfoComponent from "../../components/movieInfoComponent";
 import MovieRatingComponent from "../../components/movieRatingComponent";
-import TwitterBoxComponent from "../../components/twitterBoxComponent";
 import MovieTechInfoComponent from "../../components/movieTechInfoComponent";
 import {TrailerInfo} from "../../interfaces/trailerInfo";
 import TrailerComponent from "../../components/trailerInfoComponent";
 import SearchComponent from "../../components/searchComponent";
+import {Col, Container, Row} from "react-bootstrap";
+import TwitterBoxComponent from "../../components/twitterBoxComponent";
 
 export default function Post({postData}: {
     postData: {
@@ -51,20 +52,31 @@ export default function Post({postData}: {
     }
 
     return (
-        <MainLayout>
+        <MyPageLayout>
             <Head>
                 <title>{postData.title}</title>
             </Head>
             <article>
-                <MovieInfoComponent movieInfo={movieInfo}/>
-                <MovieRatingComponent movieInfo={movieInfo}/>
-                <MovieTechInfoComponent movieInfo={movieInfo}/>
-                <TrailerComponent trailerInfo={trailerInfo}/>
-
-                <SearchComponent />
-
+                <Container>
+                    <Row>
+                        <Col>
+                            <MovieInfoComponent movieInfo={movieInfo}/>
+                            <MovieRatingComponent movieInfo={movieInfo}/>
+                            <MovieTechInfoComponent movieInfo={movieInfo}/>
+                        </Col>
+                        <Col>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <TrailerComponent trailerInfo={trailerInfo}/>
+                            <TwitterBoxComponent/>
+                        </Col>
+                    </Row>
+                </Container>
             </article>
-        </MainLayout>
+        </MyPageLayout>
     );
 }
 

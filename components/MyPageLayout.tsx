@@ -7,7 +7,7 @@ import TopBar from "./TopBar";
 const name = 'Cat Dev Movie Lover'
 export const siteTitle = 'CatMovies'
 
-export default function MainLayout({children, home}: {
+export default function MyPageLayout({children, home}: {
     children: React.ReactNode
     home?: boolean
 }) {
@@ -28,6 +28,12 @@ export default function MainLayout({children, home}: {
                 />
                 <meta name="og:title" content={siteTitle}/>
                 <meta name="twitter:card" content="summary_large_image"/>
+                <link
+                    rel="stylesheet"
+                    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+                    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+                    crossOrigin="anonymous"
+                />
             </Head>
 
             <TopBar/>
