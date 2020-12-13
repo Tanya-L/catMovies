@@ -1,16 +1,13 @@
 import {Timeline} from "react-twitter-widgets";
 import React from "react";
 
+function TwitterBoxComponent() {
+    return (
+        <Timeline
+            dataSource={{sourceType: "profile", screenName: "IMDbTV"}}
+            options={{dnt: true, width: "400", height: "600"}}
+        />
+    );
+}
 
-export const TwitterBoxComponent = () => (
-    <Timeline
-        dataSource={{ sourceType: "profile", screenName: "IMDbTV" }}
-        options={{ dnt: true, width: "400", height: "600" }}
-    />
-);
-// <Hashtag
-//     hashtag={"catsmovie"}
-//     options={{
-//         height: '400'
-//     }}
-// />
+export default TwitterBoxComponent;

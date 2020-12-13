@@ -7,7 +7,7 @@ import TopBar from "./TopBar";
 const name = 'Cat Dev Movie Lover'
 export const siteTitle = 'CatMovies'
 
-export default function Layout({children, home}: {
+export default function MainLayout({children, home}: {
     children: React.ReactNode
     home?: boolean
 }) {

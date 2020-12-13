@@ -1,4 +1,4 @@
-import Layout from "../../components/Layout";
+import MainLayout from "../../components/MainLayout";
 import Head from 'next/head'
 import React, {useState} from "react";
 import {MovieInfo} from "../../interfaces/movieInfo";
@@ -6,10 +6,11 @@ import {GetStaticPaths, GetStaticProps} from "next";
 import {getAllPostIds, getPostData} from "../../lib/posts";
 import MovieInfoComponent from "../../components/movieInfoComponent";
 import MovieRatingComponent from "../../components/movieRatingComponent";
-import {TwitterBoxComponent} from "../../components/twitterBoxComponent";
+import TwitterBoxComponent from "../../components/twitterBoxComponent";
 import MovieTechInfoComponent from "../../components/movieTechInfoComponent";
 import {TrailerInfo} from "../../interfaces/trailerInfo";
 import TrailerComponent from "../../components/trailerInfoComponent";
+import SearchComponent from "../../components/searchComponent";
 
 export default function Post({postData}: {
     postData: {
@@ -50,7 +51,7 @@ export default function Post({postData}: {
     }
 
     return (
-        <Layout>
+        <MainLayout>
             <Head>
                 <title>{postData.title}</title>
             </Head>
@@ -60,10 +61,10 @@ export default function Post({postData}: {
                 <MovieTechInfoComponent movieInfo={movieInfo}/>
                 <TrailerComponent trailerInfo={trailerInfo}/>
 
-                <TwitterBoxComponent/>
+                <SearchComponent />
 
             </article>
-        </Layout>
+        </MainLayout>
     );
 }
 
