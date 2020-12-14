@@ -26,7 +26,7 @@ export default function Post({postData}: {
     const [trailerInfo, setTrailerInfo] = useState<TrailerInfo>(undefined)
 
     if (!movieInfo) {
-        fetch("http://www.omdbapi.com/?apikey=403ca16f&t=" + postData.title)
+        fetch("https://www.omdbapi.com/?apikey=403ca16f&t=" + postData.title)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(response.statusText)
