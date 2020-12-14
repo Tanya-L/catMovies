@@ -46,7 +46,7 @@ export default function SearchComponent() {
                 className={styles.search}
                 onChange={onChange}
                 onFocus={onFocus}
-                placeholder='Search movie'
+                placeholder='Search another cats movie'
                 type='text'
                 value={query}
             />

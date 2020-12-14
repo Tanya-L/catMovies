@@ -10,9 +10,6 @@ import Head from "next/head";
 import SearchComponent from "../components/searchComponent";
 import {Col, Container, Row} from "react-bootstrap";
 
-
-// const { Header, Footer, Sider, Content } = Layout;
-
 export const getStaticProps: GetStaticProps = async () => {
     const allPostsData = getSortedPostsData()
     return {
