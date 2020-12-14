@@ -9,7 +9,6 @@ import MovieRatingComponent from "../../components/movieRatingComponent";
 import MovieTechInfoComponent from "../../components/movieTechInfoComponent";
 import {TrailerInfo} from "../../interfaces/trailerInfo";
 import TrailerComponent from "../../components/trailerInfoComponent";
-import SearchComponent from "../../components/searchComponent";
 import {Col, Container, Row} from "react-bootstrap";
 import TwitterBoxComponent from "../../components/twitterBoxComponent";
 
@@ -26,7 +25,11 @@ export default function Post({postData}: {
     const [trailerInfo, setTrailerInfo] = useState<TrailerInfo>(undefined)
 
     if (!movieInfo) {
-        fetch("https://www.omdbapi.com/?apikey=403ca16f&t=" + postData.title)
+        fetch("https://www.omdbapi.com/?apikey=403ca16f&t=" + postData.title,
+            {
+                method: 'GET',
+                cache: 'force-cache'
+            })
             .then(response => {
                 if (!response.ok) {
                     throw new Error(response.statusText)
@@ -39,16 +42,22 @@ export default function Post({postData}: {
     }
 
     if (!trailerInfo && movieInfo) {
-        fetch("https://imdb-api.com/en/API/YouTubeTrailer/k_zxnuzv55/" + movieInfo.imdbID)
+        const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+        const imdbUrl = "https://imdb-api.com/en/API/YouTubeTrailer/k_zxnuzv55/" + movieInfo.imdbID
+        fetch(proxyUrl + imdbUrl,
+            {
+                method: 'GET',
+                cache: 'force-cache'
+            })
             .then(response => {
                 if (!response.ok) {
                     throw new Error(response.statusText)
                 }
                 return response.json()
             })
-            .then((response: TrailerInfo) => {
-                setTrailerInfo(response)
-            });
+            // .then((response: TrailerInfo) => {
+            //     setTrailerInfo(response)
+            // });
     }
 
     return (
