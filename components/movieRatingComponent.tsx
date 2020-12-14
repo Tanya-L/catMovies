@@ -6,7 +6,7 @@ import React from "react";
 export default function MovieRatingComponent({movieInfo}: { movieInfo: MovieInfo }) {
     function formatMovieRating(r: MovieRating) {
         return <span key={r.Source} className={utilStyles.list}>
-            <p>{r.Source}: {r.Value}</p>
+            {r.Source}: {r.Value}<br/>
         </span>
     }
 
